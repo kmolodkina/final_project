@@ -45,7 +45,7 @@ def main():
 
     
     for movie in movies_info:
-        print(f"Наименование: {movie['title']}, Рейтинг от сайта: {movie['rating_site']}, Рейтинг от IMDb: {movie['rating_imdb']}, Жанр: {movie['genre']}, Страна: {movie['country']}")
+        print(f"Наименование жопа: {movie['title']}, Рейтинг от сайта: {movie['rating_site']}, Рейтинг от IMDb: {movie['rating_imdb']}, Жанр: {movie['genre']}, Страна: {movie['country']}")
 
 if __name__ == "__main__":
     main()
