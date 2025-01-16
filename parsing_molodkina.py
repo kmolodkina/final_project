@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def get_movies_info(url):
     response = requests.get(url)
@@ -20,7 +21,7 @@ def get_movies_info(url):
             rating_imdb = movie_ratings_imdb[i].get_text(strip=True)
             genre_country_year = movie_genres_countries[i].get_text(strip=True)
 
-            # Разделяем строку на жанр, страну и год
+            
             parts = genre_country_year.split(',')
             genre = parts[0].strip()
             country = parts[1].strip()
@@ -45,11 +46,24 @@ def main():
     url = 'https://kino.mail.ru/cinema/top/'
     movies_info = get_movies_info(url)
 
-    # Преобразуем список словарей в DataFrame
+    
     df = pd.DataFrame(movies_info)
 
-    # Выводим DataFrame на экран
+    
     print(df)
 
-if __name__ == "main":
+    
+    high_rated_movies_8 = df[df['rating_site'].astype(float) > 8]
+
+    
+    genre_counts_8 = high_rated_movies_8['genre'].value_counts()
+    plt.figure(figsize=(8, 8))
+    plt.pie(genre_counts_8, labels=genre_counts_8.index, autopct='%1.1f%%', startangle=140)
+    plt.title('Жанры фильмов с рейтингом сайта больше 8')
+    plt.legend(genre_counts_8.index, title="Жанры", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    plt.show()
+
+ 
+
+if __name__ == "__main__":
     main()
