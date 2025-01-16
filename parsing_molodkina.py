@@ -21,7 +21,7 @@ def get_movies_info(url):
             rating_imdb = movie_ratings_imdb[i].get_text(strip=True)
             genre_country_year = movie_genres_countries[i].get_text(strip=True)
 
-            # Разделяем строку на жанр, страну и год
+            
             parts = genre_country_year.split(',')
             genre = parts[0].strip()
             country = parts[1].strip()
@@ -46,10 +46,10 @@ def main():
     url = 'https://kino.mail.ru/cinema/top/'
     movies_info = get_movies_info(url)
 
-    # Преобразуем список словарей в DataFrame
+    
     df = pd.DataFrame(movies_info)
 
-    # Выводим DataFrame на экран
+    
     print(df)
 
     # Фильтруем фильмы с рейтингом сайта больше 8
@@ -59,33 +59,11 @@ def main():
     genre_counts_8 = high_rated_movies_8['genre'].value_counts()
     plt.figure(figsize=(8, 8))
     plt.pie(genre_counts_8, labels=genre_counts_8.index, autopct='%1.1f%%', startangle=140)
-    plt.title('Страны фильмов с рейтингом сайта больше 8')
-    plt.legend(genre_counts_8.index, title="Страны", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    plt.title('Жанры фильмов с рейтингом сайта больше 8')
+    plt.legend(genre_counts_8.index, title="Жанры", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
     plt.show()
 
-    # Фильтруем фильмы с рейтингом сайта больше 9
-    high_rated_movies_9 = df[df['rating_imdb'].astype(float) > 9]
+ 
 
-    # Круговая диаграмма для стран фильмов с рейтингом сайта больше 9
-    country_counts_9 = high_rated_movies_9['country'].value_counts()
-    plt.figure(figsize=(8, 8))
-    plt.pie(country_counts_9, labels=country_counts_9.index, autopct='%1.1f%%', startangle=140)
-    plt.title('Года фильмов с рейтингом сайта больше 9')
-    plt.legend(country_counts_9.index, title="Года", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    plt.show()
-
-    # График изменения оценок фильмов с годами (первые 10 фильмов)
-    first_10_movies = df.head(10)
-    years = first_10_movies['country'].astype(int)  # Используем переменную country для годов
-    ratings = first_10_movies['rating_site'].astype(float)
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(years, ratings, marker='o', linestyle='-', color='b')
-    plt.title('Изменение оценок фильмов с годами')
-    plt.xlabel('Год')
-    plt.ylabel('Оценка')
-    plt.grid(True)
-    plt.show()
-
-if name == "main":
+if __name__ == "__main__":
     main()
