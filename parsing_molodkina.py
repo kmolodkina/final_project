@@ -1,3 +1,4 @@
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -87,5 +88,5 @@ def main():
     plt.grid(True)
     plt.show()
 
-if name == "main":
+if __name__ == "__main__":
     main()
